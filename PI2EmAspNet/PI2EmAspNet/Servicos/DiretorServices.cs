@@ -10,6 +10,11 @@ namespace PI2EmAspNet.Servicos {
     public class DiretorServices {
         private readonly AplicationContext _context;
 
+        public async Task CreateAsync(Diretor diretor) {
+            await _context.Diretores.AddAsync(diretor);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ICollection<Diretor>> FindAllAsync() {
             return await _context.Diretores.ToListAsync();
         }

@@ -10,6 +10,11 @@ namespace PI2EmAspNet.Servicos {
     public class DesenvolvedoraServices {
         private readonly AplicationContext _context;
 
+        public async Task CreateAsync(Desenvolvedora desenvolvedora) {
+            await _context.Desenvolvedoras.AddAsync(desenvolvedora);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ICollection<Desenvolvedora>> FindAllAsync() {
             return await _context.Desenvolvedoras.ToListAsync();
         }
@@ -25,5 +30,7 @@ namespace PI2EmAspNet.Servicos {
             }
             return true;
         }
+
+       
     }
 }

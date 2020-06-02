@@ -7,22 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PI2EmAspNet.Data;
 using PI2EmAspNet.Models;
+using PI2EmAspNet.Servicos;
 
 namespace PI2EmAspNet.Controllers
 {
     public class DesenvolvedoraController : Controller
     {
-        private readonly AplicationContext _context;
+        private readonly DesenvolvedoraServices _ds;
 
-        public DesenvolvedoraController(AplicationContext context)
+        public DesenvolvedoraController(DesenvolvedoraServices ds)
         {
-            _context = context;
+            _ds = ds;
         }
 
         // GET: Desenvolvedora
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Desenvolvedoras.ToListAsync());
+            return View(await _ds.FindAllAsync());
         }
 
         // GET: Desenvolvedora/Details/5
@@ -33,8 +34,8 @@ namespace PI2EmAspNet.Controllers
                 return NotFound();
             }
 
-            var desenvolvedora = await _context.Desenvolvedoras
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var desenvolvedora = await _ds.FindByIdAsync(id.Value);
+                
             if (desenvolvedora == null)
             {
                 return NotFound();
@@ -54,18 +55,19 @@ namespace PI2EmAspNet.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeDesenvolvedora,Ativo")] Desenvolvedora desenvolvedora)
+        public async Task<IActionResult> Create(Desenvolvedora desenvolvedora)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(desenvolvedora);
-                await _context.SaveChangesAsync();
+                await _ds.CreateAsync(desenvolvedora);
+                
                 return RedirectToAction(nameof(Index));
             }
-            return View(desenvolvedora);
+            return View(nameof(Index));
         }
 
         // GET: Desenvolvedora/Edit/5
+        /*
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -149,5 +151,7 @@ namespace PI2EmAspNet.Controllers
         {
             return _context.Desenvolvedoras.Any(e => e.Id == id);
         }
+
+    */
     }
 }

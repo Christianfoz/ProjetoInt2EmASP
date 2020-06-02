@@ -10,6 +10,15 @@ namespace PI2EmAspNet.Servicos {
     public class PlataformaServices {
         private readonly AplicationContext _context;
 
+        public PlataformaServices(AplicationContext context) {
+            _context = context;
+        }
+
+        public async Task CreateAsync(Plataforma plataforma) {
+            await _context.Plataformas.AddAsync(plataforma);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ICollection<Plataforma>> FindAllAsync() {
             return await _context.Plataformas.ToListAsync();
         }

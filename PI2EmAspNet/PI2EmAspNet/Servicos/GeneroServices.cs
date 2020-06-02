@@ -10,6 +10,15 @@ namespace PI2EmAspNet.Servicos {
     public class GeneroServices {
         private readonly AplicationContext _context;
 
+        public GeneroServices(AplicationContext context) {
+            _context = context;
+        }
+
+        public async Task CreateAsync(Genero genero) {
+            await _context.Generos.AddAsync(genero);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ICollection<Genero>> FindAllAsync() {
             return await _context.Generos.ToListAsync();
         }

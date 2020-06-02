@@ -10,6 +10,15 @@ namespace PI2EmAspNet.Servicos {
     public class ModoJogoServices {
         private readonly AplicationContext _context;
 
+        public ModoJogoServices(AplicationContext context) {
+            _context = context;
+        }
+
+        public async Task CreateAsync(ModoJogo modoJogo) {
+            await _context.ModoJogos.AddAsync(modoJogo);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ICollection<ModoJogo>> FindAllAsync() {
             return await _context.ModoJogos.ToListAsync();
         }
