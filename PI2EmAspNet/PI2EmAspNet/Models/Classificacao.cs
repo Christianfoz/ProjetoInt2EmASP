@@ -12,6 +12,16 @@ namespace PI2EmAspNet.Models {
         public List<Jogo> Jogos { get; set; }
         public Boolean Ativo { get; set; }
 
+        public Classificacao(string nomeClassificacao, bool ativo) {
+            NomeClassificacao = nomeClassificacao;
+            Ativo = ativo;
+        }
 
+        public Classificacao(string nomeClassificacao) {
+            NomeClassificacao = nomeClassificacao;
+        }
+
+        public Classificacao() {
+        }
     }
 }

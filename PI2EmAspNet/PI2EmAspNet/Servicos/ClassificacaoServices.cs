@@ -12,8 +12,12 @@ namespace PI2EmAspNet.Servicos {
     public class ClassificacaoServices {
         private readonly AplicationContext _context;
 
+        public ClassificacaoServices(AplicationContext context) {
+            _context = context;
+        }
+
         public async Task CreateAsync(Classificacao classificacao) {
-            await _context.AddAsync(classificacao);
+            await _context.Classificacoes.AddAsync(classificacao);
             await _context.SaveChangesAsync();
         }
 
